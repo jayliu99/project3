@@ -27,11 +27,31 @@ def check_mst(adj_mat: np.ndarray,
     def approx_equal(a, b):
         return abs(a - b) < allowed_error
 
+    def connected(mat):
+        # The nonzero entries in 𝐴^𝑘 where A=mat indicate pairs of nodes that are connected by a path of length 𝑘. 
+        # Thus, if n=(number of nodes) and the sum A+A^2+...A^(n-1) contains no nonzero entries, then the graph is connected.
+        sum_mat = mat
+        for i in range(2, mat.shape[0]):
+            sum_mat = np.add(sum_mat, np.linalg.matrix_power(mat, i))
+        return not np.any(sum_mat == 0)
+
+
     total = 0
+    total_edges = 0
+    nonzero_edge = 0
     for i in range(mst.shape[0]):
         for j in range(i+1):
-            total += mst[i, j]
+            total += mst[i, j] # Compute total cost of MST
+            if mst[i, j] != 0:
+                total_edges += 1 # Keep track of total number of MST edges
+                nonzero_edge = (i, j) # Store one of the MST edges
     assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
+    assert total_edges == (adj_mat.shape[0]-1), 'Proposed MST has incorrect number of edges'
+    assert connected(mst), 'Proposed MST is not connected'
+    # Since an MST is a tree, removing any edge will disconnect it.
+    broken_mst = mst
+    broken_mst[nonzero_edge] = 0
+    assert not connected(broken_mst), 'Proposed MST is not a tree'
 
 
 def test_mst_small():
