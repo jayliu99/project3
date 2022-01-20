@@ -1,0 +1,4 @@
+numpy
+scikit-learn
+pytest>=3.0
+heapq
