@@ -41,11 +41,6 @@ class Graph:
         Note that because we assume our input graph is undirected, `self.adj_mat` is symmetric. 
         Row i and column j represents the edge weight between vertex i and vertex j. An edge weight of zero indicates that no edge exists. 
         
-        TODO: 
-            This function does not return anything. Instead, store the adjacency matrix 
-        representation of the minimum spanning tree of `self.adj_mat` in `self.mst`.
-        We highly encourage the use of priority queues in your implementation. See the heapq
-        module, particularly the `heapify`, `heappop`, and `heappush` functions.
         """
         self.mst = np.zeros_like(self.adj_mat) # Initialize an empty mst of same shape and type as adj mat (to be filled in)
         num_nodes = self.adj_mat.shape[0]
