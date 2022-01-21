@@ -19,10 +19,12 @@ def check_mst(adj_mat: np.ndarray,
             expected_weight: weight of the minimum spanning tree of the full graph
             allowed_error: Allowed difference between proposed MST weight and `expected_weight`
 
-        TODO: 
-            Add additional assertions to ensure the correctness of your MST implementation
-        For example, how many edges should a minimum spanning tree have? Are minimum spanning trees
-        always connected? What else can you think of?
+        Tests:
+            - MST has correct expected weight
+            - MST has correct number of edges
+            - MST fully connects all nodes
+            - MST is a proper tree
+
     """
     def approx_equal(a, b):
         return abs(a - b) < allowed_error
@@ -78,7 +80,7 @@ def test_mst_single_cell_data():
 
 
 def test_mst_student():
-    """ TODO: Write at least one unit test for MST construction """
+    """ Check that a proper mst is returned, for a graph with cycles and multiple possible MSTs"""
     file_path = './data/student_test.csv'
     g = Graph(file_path)
     g.construct_mst()
